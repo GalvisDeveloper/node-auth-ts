@@ -51,8 +51,8 @@ export class Server {
 
   }
 
-  public close() {
-    this.serverListener?.close();
+  public stop() {
+    this.serverListener?.stop();
   }
 
 }
