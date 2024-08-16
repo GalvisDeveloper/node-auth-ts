@@ -1,3 +1,4 @@
+import { Response } from "express";
 
 
 
@@ -10,32 +11,38 @@ export class CustomError extends Error {
         super(message);
     }
 
-    static badRequest(message: string) {
-        return new CustomError(400, message);
+    static handleError(err: string | Error, code: number, res?: Response): string | Error | Response<any, Record<string, any>> {
+        //save logger
+        if (!res) return err;
+        return res.status(code).json({ message: err instanceof Error ? err.message : err });
     }
 
-    static unauthorized(message: string) {
-        return new CustomError(401, message);
+    static badRequest(message: string, res?: Response) {
+        this.handleError(message, 400, res);
     }
 
-    static forbidden(message: string) {
-        return new CustomError(403, message);
+    static unauthorized(message: string, res?: Response) {
+        this.handleError(message, 401, res);
     }
 
-    static notFound(message: string) {
-        return new CustomError(404, message);
+    static forbidden(message: string, res?: Response) {
+        this.handleError(message, 403, res);
     }
 
-    static conflict(message: string) {
-        return new CustomError(409, message);
+    static notFound(message: string, res?: Response) {
+        this.handleError(message, 404, res);
     }
 
-    static internal(error: Error | string) {
-        return new CustomError(500, error instanceof Error ? error.message : error);
+    static conflict(message: string, res?: Response) {
+        this.handleError(message, 409, res);
     }
 
-    static fromCode(code: number, message: string) {
-        return new CustomError(code, message);
+    static internal(error: string, res?: Response) {
+        this.handleError(error, 500, res);
+    }
+
+    static fromCode(code: number, message: string, res?: Response) {
+        this.handleError(message, code, res);
     }
 
 }
