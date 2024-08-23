@@ -33,7 +33,11 @@ export class AuthService {
             // Return user without password
             const { password, ...rest } = userEntity;
 
-            return { message: 'User registered successfully', data: { user: rest, token: 'abc' } };
+            const dataToken = { id: user.id };
+            const token = await JwtAdapter.generateToken(dataToken, envs.JWT_SECRET);
+            if (!token) throw { message: 'Error generating token', code: 500 };
+
+            return { message: 'User registered successfully', data: { user: rest, token } };
         } catch (error) {
             throw { message: `${error}`, code: 500 };
         }
@@ -52,7 +56,7 @@ export class AuthService {
 
             const { password, ...rest } = userEntity;
 
-            const dataToken = { id: user.id, email: user.email };
+            const dataToken = { id: user.id };
             const token = await JwtAdapter.generateToken(dataToken, envs.JWT_SECRET);
             if (!token) throw { message: 'Error generating token', code: 500 };
 
