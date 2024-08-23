@@ -1,11 +1,10 @@
 import { UserModel } from '../../data';
 import { SignUpDto } from '../../domain/dtos/auth/signUp.dto';
-import { CustomError } from '../../domain/errors';
 import { UserEntity } from '../../domain/entities/user';
-import bcrypt from 'bcryptjs';
 import { bcryptAdapter } from '../../config/bcrypt.adapter';
 import { SignInDto } from '../../domain/dtos/auth/signIn.dto';
-
+import { JwtAdapter } from '../../config/jwt.adapter';
+import { envs } from '../../config';
 
 export class AuthService {
     constructor(
@@ -53,7 +52,11 @@ export class AuthService {
 
             const { password, ...rest } = userEntity;
 
-            return { data: { user: rest, token: 'abc' } };
+            const dataToken = { id: user.id, email: user.email };
+            const token = await JwtAdapter.generateToken(dataToken, envs.JWT_SECRET);
+            if (!token) throw { message: 'Error generating token', code: 500 };
+
+            return { data: { user: rest, token } };
         } catch (err) {
             throw { message: `${err}`, code: 500 };
         }
