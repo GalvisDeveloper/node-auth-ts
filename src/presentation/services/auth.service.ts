@@ -5,10 +5,11 @@ import { bcryptAdapter } from '../../config/bcrypt.adapter';
 import { SignInDto } from '../../domain/dtos/auth/signIn.dto';
 import { JwtAdapter } from '../../config/jwt.adapter';
 import { envs } from '../../config';
+import { EmailService } from './email.service';
 
 export class AuthService {
     constructor(
-
+        private readonly emailService: EmailService,
     ) { }
 
     public async signUp(signUpDto: SignUpDto) {
@@ -26,6 +27,9 @@ export class AuthService {
 
             // Save user
             await user.save();
+
+            // Confirmation email
+            await this.sendEmailValidationLink(user.email);
 
             // Entity instance
             const userEntity = UserEntity.fromObject(user);
@@ -57,13 +61,47 @@ export class AuthService {
             const { password, ...rest } = userEntity;
 
             const dataToken = { id: user.id };
-            const token = await JwtAdapter.generateToken(dataToken, envs.JWT_SECRET);
+            const token = await JwtAdapter.generateToken(dataToken, envs.JWT_SECRET, 'wtryutyi');
             if (!token) throw { message: 'Error generating token', code: 500 };
 
             return { data: { user: rest, token } };
         } catch (err) {
+            if (typeof err === 'object') throw err;
             throw { message: `${err}`, code: 500 };
         }
+    }
+
+    public async validateEmail(token: string) {
+        const { email } = await JwtAdapter.verifyToken(token);
+        if (!email) throw { message: 'Email not in token', code: 500 };
+
+        const user = await UserModel.findOne({ email });
+        if (!user) throw { message: 'User not found', code: 404 };
+
+        user.emailValidated = true;
+        await user.save();
+    }
+
+    private sendEmailValidationLink = async (email: string) => {
+
+        const token = await JwtAdapter.generateToken({ email }, envs.JWT_SECRET, '1min');
+        if (!token) throw { message: 'Error generating token', code: 500 };
+
+        const link = `${envs.BASE_URL}/auth/validate-email/${token}`;
+
+        const html = `
+            <h1>Click <a href="${link}">here</a> to verify your email</h1>
+            <p>It is for treidy and cristomonedas, be generous</p>
+        `
+
+        const dataToSend = {
+            to: email,
+            subject: 'Email verification',
+            htmlBody: html
+        }
+
+        const sent = await this.emailService.sendEmail(dataToSend);
+        if (!sent) throw { message: 'Error sending email', code: 500 };
 
     }
 }
