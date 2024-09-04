@@ -2,8 +2,6 @@
 
 Este proyecto previamente inicializado tiene todo lo necesario para trabajar con TypeScript, Express y Rest.
 
-Cada paso de su configuración ya se ha realizado previamente en el curso, por lo que solo es necesario clonar el proyecto y comenzar a trabajar.
-
 
 ## Instalación
 
@@ -12,3 +10,8 @@ Cada paso de su configuración ya se ha realizado previamente en el curso, por l
 3. En caso de necesitar base de datos, configurar el docker-compose.yml y ejecutar `docker-compose up -d` para levantar los servicios deseados.
 4. Ejecutar `yarn dev` para levantar el proyecto en modo desarrollo
 
+# Contenido
+
+- Implementacion de autenticacion y autorizacion de usuarios
+- Envios de correo + validacion de tokens
+- Proteccion de rutas, relaciones, middlewares y paginacion

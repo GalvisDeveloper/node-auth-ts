@@ -21,7 +21,8 @@ export class EmailService {
     constructor(
         mailerService: string = envs.MAILER_SERVICE,
         mailerEmailId: string = envs.MAILER_EMAIL_ID,
-        mailerSecretKey: string = envs.MAILER_SECRET_KEY
+        mailerSecretKey: string = envs.MAILER_SECRET_KEY,
+        private readonly postToProvider: boolean = envs.SEND_EMAIL
     ) {
         this.transporter = nodemailer.createTransport({
             service: mailerService,
@@ -37,6 +38,8 @@ export class EmailService {
         const { to, subject, htmlBody, attachments = [] } = options;
 
         try {
+            if (!this.postToProvider) return true;
+
             const sentInformation = await this.transporter.sendMail(
                 {
                     to: to,
