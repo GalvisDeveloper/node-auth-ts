@@ -1,15 +1,18 @@
 import { Router } from "express";
 import { CategoryController } from "./category.controller";
+import { AuthMiddleWare } from "../middlewares/auth/auth.middleware";
+import { CategoryService } from "../services/category/category.service";
 
 export class CategoryRoutes {
 
     static get routes(): Router {
         const router = Router();
 
-        const controller = new CategoryController();
+        const service = new CategoryService();
+        const controller = new CategoryController(service);
 
-        router.get('/', controller.getCategories);
-        router.post('/', controller.createCategory);
+        router.get('/', [AuthMiddleWare.validateToken], controller.getCategories);
+        router.post('/', [AuthMiddleWare.validateToken], controller.createCategory);
         // router.get('/:id', CategoryController.getCategoryById);
         // router.put('/:id', CategoryController.updateCategory);
         // router.delete('/:id', CategoryController.deleteCategory);

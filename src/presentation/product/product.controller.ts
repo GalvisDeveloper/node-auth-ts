@@ -4,7 +4,6 @@ export class ProductController {
 
     //DI - Dependency Injection
     constructor(
-        // private readonly authService: AuthService
     ) { }
 
     getProducts = (req: Request, res: Response) => {

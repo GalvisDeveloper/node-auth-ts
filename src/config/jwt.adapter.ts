@@ -14,12 +14,12 @@ export class JwtAdapter {
         });
     }
 
-    static verifyToken(token: string): any {
+    static verifyToken<T>(token: string): Promise<T|null> {
 
         return new Promise((resolve, reject) => {
             jwt.verify(token, envs.JWT_SECRET, (err, decoded) => {
-                if (err) return reject({ message: `${err}`, code: 401 });
-                resolve(decoded);
+                if (err) return reject({ message: err, code: 401 });
+                resolve(decoded as T);
             });
         });
 

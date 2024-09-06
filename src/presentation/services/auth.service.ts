@@ -61,7 +61,7 @@ export class AuthService {
             const { password, ...rest } = userEntity;
 
             const dataToken = { id: user.id };
-            const token = await JwtAdapter.generateToken(dataToken, envs.JWT_SECRET, 'wtryutyi');
+            const token = await JwtAdapter.generateToken(dataToken, envs.JWT_SECRET);
             if (!token) throw { message: 'Error generating token', code: 500 };
 
             return { data: { user: rest, token } };
@@ -72,7 +72,7 @@ export class AuthService {
     }
 
     public async validateEmail(token: string) {
-        const { email } = await JwtAdapter.verifyToken(token);
+        const { email } = await JwtAdapter.verifyToken(token) as { email: string };
         if (!email) throw { message: 'Email not in token', code: 500 };
 
         const user = await UserModel.findOne({ email });
