@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { CategoryModel } from '../../../data';
 import { CreateCategoryDto } from '../../../domain/dtos/category/create-category.dto';
 import { UserEntity } from '../../../domain/entities/user';
+import { PaginationDto } from '../../../domain';
 
 
 export class CategoryService {
@@ -33,12 +34,24 @@ export class CategoryService {
 
     }
 
-    async getCategories() {
+    async getCategories(paginationDto: PaginationDto) {
+
+        const { page, limit } = paginationDto;
 
         try {
-            const categories = await CategoryModel.find();
+            const [total, categories] = await Promise.all([
+                CategoryModel.countDocuments(),
+                CategoryModel.find().skip((page - 1) * limit).limit(limit)
+            ]);
             const data = _.map(categories, obj => _.pick(obj, ['id', 'name', 'available']));
-            return { data };
+            const dataToSend = {
+                page,
+                limit,
+                total,
+                ...(page < total / limit && { next: `/api/categories?page=${+page + 1}&limit=${+limit}` }),
+                ...(page - 1 > 0 && { previous: `/api/categories?page=${+page - 1}&limit=${+limit}` })
+            }
+            return { data, ...dataToSend };
         } catch (e) {
             console.log(e);
             throw { message: `Internal server error`, code: 500 };
