@@ -22,7 +22,7 @@ export class AuthService {
             const user = new UserModel(signUpDto);
 
             // Encrypted password
-            user.password = await bcryptAdapter.hash(signUpDto.password);
+            user.password = bcryptAdapter.hash(signUpDto.password);
 
             // Save user
             await user.save();
@@ -52,7 +52,7 @@ export class AuthService {
 
         try {
             // compare password
-            const isPasswordValid = await bcryptAdapter.compare(signInDto.password, user.password);
+            const isPasswordValid = bcryptAdapter.compare(signInDto.password, user.password);
             if (!isPasswordValid) throw { message: 'Invalid password', code: 401 };
 
             const userEntity = UserEntity.fromObject(user);

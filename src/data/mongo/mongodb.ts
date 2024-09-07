@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-
-
 interface Options {
     uri: string;
     dbName: string;
@@ -33,4 +31,8 @@ export class MongoDB {
     static async disconnect() {
         await mongoose.disconnect();
     }
+
+    // static async deleteMany(collection: string, filter: any) {
+    //     await mongoose.connection.collection(collection).deleteMany(filter);
+    // }
 }
