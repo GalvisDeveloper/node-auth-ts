@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import { CategoryModel, ProductModel } from '../../../data';
+import { ProductModel } from '../../../data';
 import { PaginationDto } from '../../../domain';
 import { CreateCategoryDto as CreateProductDto } from '../../../domain/dtos/category/create-category.dto';
 
@@ -40,7 +39,8 @@ export class ProductService {
             const [total, products] = await Promise.all([
                 ProductModel.countDocuments(),
                 ProductModel.find().skip((page - 1) * limit).limit(limit)
-                // TODO: populate
+                    .populate('category', 'name available _id')
+                    .populate('user', 'name email _id')
             ]);
             const dataToSend = {
                 page,

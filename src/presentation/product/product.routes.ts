@@ -3,6 +3,7 @@
 import { Router } from "express";
 import { ProductController } from "./product.controller";
 import { ProductService } from "../services";
+import { AuthMiddleWare } from "../middlewares/auth/auth.middleware";
 
 export class ProductRoutes {
 
@@ -13,7 +14,7 @@ export class ProductRoutes {
         const controller = new ProductController(service);
 
         router.get('/', controller.getProducts);
-        router.post('/', controller.createProduct);
+        router.post('/', [AuthMiddleWare.validateToken], controller.createProduct);
         // router.get('/:id', CategoryController.getCategoryById);
         // router.put('/:id', CategoryController.updateCategory);
         // router.delete('/:id', CategoryController.deleteCategory);

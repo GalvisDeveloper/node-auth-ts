@@ -22,4 +22,12 @@ const productSchema = new mongoose.Schema({
 
 });
 
+productSchema.set('toJSON', {
+    virtuals: true,
+    versionKey: false,
+    transform: function(document, returnedObject) {
+        delete returnedObject._id;
+    }
+});
+
 export const ProductModel = mongoose.model('Product', productSchema);

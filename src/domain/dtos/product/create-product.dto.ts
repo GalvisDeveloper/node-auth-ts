@@ -1,3 +1,4 @@
+import { Validators } from "../../../config/validators";
 
 
 export class CreateProductDto {
@@ -22,7 +23,10 @@ export class CreateProductDto {
         if (typeof available !== 'boolean') {
             availableBoolean = (available === 'true');
         }
-        
+
+        if (!Validators.isMongoId(user)) return ['Invalid user id'];
+        if (!Validators.isMongoId(category)) return ['Invalid category id'];
+
         return [undefined, new CreateProductDto(name, availableBoolean, price, description, category, user)];
 
     }

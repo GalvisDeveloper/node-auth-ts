@@ -30,10 +30,7 @@ export class MongoDB {
         // return db.collection(this.collection);
     }
 
-    async disconnect() {
-        // const { MongoClient } = await import('mongodb');
-        // const client = new MongoClient(this.uri, { useUnifiedTopology: true });
-        // await client.connect();
-        // await client.close();
+    static async disconnect() {
+        await mongoose.disconnect();
     }
 }

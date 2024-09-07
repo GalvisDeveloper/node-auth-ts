@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { SignUpDto } from "../../domain/dtos/auth/signUp.dto";
 import { CustomError } from "../../domain/errors";
-import { AuthService } from "../services/auth.service";
 import { SignInDto } from "../../domain/dtos/auth/signIn.dto";
+import { AuthService } from "../services";
 
 export class AuthController {
 
