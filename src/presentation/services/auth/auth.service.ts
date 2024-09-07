@@ -1,11 +1,10 @@
-import { UserModel } from '../../data';
-import { SignUpDto } from '../../domain/dtos/auth/signUp.dto';
-import { UserEntity } from '../../domain/entities/user';
-import { bcryptAdapter } from '../../config/bcrypt.adapter';
-import { SignInDto } from '../../domain/dtos/auth/signIn.dto';
-import { JwtAdapter } from '../../config/jwt.adapter';
-import { envs } from '../../config';
-import { EmailService } from './email.service';
+import { envs } from "../../../config";
+import { bcryptAdapter } from "../../../config/bcrypt.adapter";
+import { JwtAdapter } from "../../../config/jwt.adapter";
+import { UserModel } from "../../../data";
+import { SignInDto, SignUpDto, UserEntity } from "../../../domain";
+import { EmailService } from "../email.service";
+
 
 export class AuthService {
     constructor(
