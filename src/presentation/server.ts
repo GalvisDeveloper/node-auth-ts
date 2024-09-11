@@ -52,7 +52,7 @@ export class Server {
   }
 
   public stop() {
-    this.serverListener?.stop();
+    this.serverListener?.close();
   }
 
 }

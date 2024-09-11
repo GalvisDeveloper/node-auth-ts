@@ -15,14 +15,14 @@ import { seedData } from "./seedData";
         dbName: envs.MONGO_DB_NAME
     });
 
-    await mainSeed();
+    await seed();
 
     await MongoDB.disconnect();
 })();
 
 const randomBetween0AndX: (x: number) => number = (x) => Math.floor(Math.random() * x);
 
-async function mainSeed() {
+async function seed() {
     // delete all data
     await Promise.all([
         UserModel.deleteMany({}),
