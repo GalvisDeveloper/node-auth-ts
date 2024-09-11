@@ -1,10 +1,8 @@
 import { Router } from 'express';
-import { AuthRoutes } from './auth/auth.routes';
-import { ProductRoutes } from './product/product.routes';
-import { CategoryRoutes } from './category/category.routes';
-
-
-
+import { AuthRoutes } from './routes/auth.routes';
+import { ProductRoutes } from './routes/product.routes';
+import { CategoryRoutes } from './routes/category.routes';
+import { FileUploadRoutes } from './routes/file-upload.routes';
 
 export class AppRoutes {
 
@@ -17,7 +15,7 @@ export class AppRoutes {
     router.use('/api/auth', AuthRoutes.routes);
     router.use('/api/products', ProductRoutes.routes);
     router.use('/api/categories', CategoryRoutes.routes);
-
+    router.use('/api/files', FileUploadRoutes.routes);
 
     return router;
   }

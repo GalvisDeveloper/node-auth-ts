@@ -1,6 +1,6 @@
-import { ProductModel } from '../../../data';
-import { PaginationDto } from '../../../domain';
-import { CreateCategoryDto as CreateProductDto } from '../../../domain/dtos/category/create-category.dto';
+import { ProductModel } from "../../data";
+import { CreateProductDto, PaginationDto } from "../../domain";
+
 
 
 export class ProductService {

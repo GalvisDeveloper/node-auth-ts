@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { CategoryService } from "../services/category/category.service";
 import { CreateCategoryDto, CustomError, PaginationDto } from "../../domain";
+import { CategoryService } from "../services";
 
 export class CategoryController {
 

@@ -1,9 +1,7 @@
-import { envs } from "../../../config";
-import { bcryptAdapter } from "../../../config/bcrypt.adapter";
-import { JwtAdapter } from "../../../config/jwt.adapter";
-import { UserModel } from "../../../data";
-import { SignInDto, SignUpDto, UserEntity } from "../../../domain";
-import { EmailService } from "../email.service";
+import { bcryptAdapter, envs, JwtAdapter } from "../../config";
+import { UserModel } from "../../data";
+import { SignInDto, SignUpDto, UserEntity } from "../../domain";
+import { EmailService } from "./email.service";
 
 
 export class AuthService {

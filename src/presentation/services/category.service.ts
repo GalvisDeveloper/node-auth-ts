@@ -1,8 +1,7 @@
 import _ from 'lodash';
-import { CategoryModel } from '../../../data';
-import { CreateCategoryDto } from '../../../domain/dtos/category/create-category.dto';
-import { UserEntity } from '../../../domain/entities/user';
-import { PaginationDto } from '../../../domain';
+import { CreateCategoryDto, PaginationDto, UserEntity } from '../../domain';
+import { CategoryModel } from '../../data';
+
 
 
 export class CategoryService {

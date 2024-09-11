@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { ProductService } from "../services";
 import { CustomError, PaginationDto } from "../../domain";
 import { CreateProductDto } from "../../domain/dtos/product/create-product.dto";
+import { ProductService } from "../services";
 
 export class ProductController {
 
@@ -23,7 +23,7 @@ export class ProductController {
 
     createProduct = (req: Request, res: Response) => {
 
-        const [error, createProductDto] = CreateProductDto.create({...req.body, user: req.body.user.id});
+        const [error, createProductDto] = CreateProductDto.create({ ...req.body, user: req.body.user.id });
         if (error) throw CustomError.badRequest(error, res);
 
         this.productService.createProduct(createProductDto!)
