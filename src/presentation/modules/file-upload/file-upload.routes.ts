@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { AuthMiddleWare } from "../middlewares/auth/auth.middleware";
-import { FileUploadController } from "../controllers";
-import { FileUploadService } from "../services";
+import { AuthMiddleWare } from "../../middlewares/auth/auth.middleware";
+import { FileUploadService } from "./file-upload.service";
+import { FileUploadController } from "./file-upload.controller";
 
 export class FileUploadRoutes {
 

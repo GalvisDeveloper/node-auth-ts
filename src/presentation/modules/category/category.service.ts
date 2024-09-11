@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { CreateCategoryDto, PaginationDto, UserEntity } from '../../domain';
-import { CategoryModel } from '../../data';
+import { CreateCategoryDto, PaginationDto, UserEntity } from '../../../domain';
+import { CategoryModel } from '../../../data';
 
 
 

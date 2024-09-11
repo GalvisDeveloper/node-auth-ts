@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { CustomError, PaginationDto } from "../../domain";
-import { CreateProductDto } from "../../domain/dtos/product/create-product.dto";
-import { ProductService } from "../services";
+import { ProductService } from "./product.service";
+import { CreateProductDto, CustomError, PaginationDto } from "../../../domain";
 
 export class ProductController {
 

@@ -1,6 +1,5 @@
-import { ProductModel } from "../../data";
-import { CreateProductDto, PaginationDto } from "../../domain";
-
+import { ProductModel } from "../../../data";
+import { CreateProductDto, PaginationDto } from "../../../domain";
 
 
 export class ProductService {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { FileUploadService } from "../services";
+import { FileUploadService } from "./file-upload.service";
 
 export class FileUploadController {
 

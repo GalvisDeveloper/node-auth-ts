@@ -1,8 +1,5 @@
 import { Router } from 'express';
-import { AuthRoutes } from './routes/auth.routes';
-import { ProductRoutes } from './routes/product.routes';
-import { CategoryRoutes } from './routes/category.routes';
-import { FileUploadRoutes } from './routes/file-upload.routes';
+import { AuthRoutes, CategoryRoutes, FileUploadRoutes, ProductRoutes } from './modules';
 
 export class AppRoutes {
 
