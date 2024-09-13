@@ -16,16 +16,11 @@ export class FileUploadController {
 
 
     uploadFile = (req: Request, res: Response) => {
-        const filesRequest = req.files;
 
-        if (!filesRequest || Object.keys(filesRequest).length === 0) {
-            return CustomError.badRequest('No files were uploaded', res);
-        }
+        const file = req.body.files.at(0) as UploadedFile;
 
-        const file = filesRequest.file as UploadedFile;
-
-        this.fileUploadService.uploadFileSingle({ file })
-            .then((uploaded) => console.log(uploaded) )
+        this.fileUploadService.uploadFileSingle({ file, folder: `uploads/${req.params.type}` })
+            .then((uploaded) => res.json(uploaded))
             .catch((err: any) => res.status(err.code).json({ message: err.message }));
 
     }
