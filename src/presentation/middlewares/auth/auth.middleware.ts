@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { JwtAdapter } from "../../../config/jwt.adapter";
+import { JwtAdapter } from "../../../config/adapters/jwt.adapter";
 import { UserModel } from "../../../data";
 import { UserEntity } from "../../../domain/entities/user";
 import { CustomError } from "../../../domain/errors";

@@ -1,6 +1,6 @@
 
 import jwt from 'jsonwebtoken';
-import { envs } from './envs';
+import { envs } from '../envs';
 
 export class JwtAdapter {
 

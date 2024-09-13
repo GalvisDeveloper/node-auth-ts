@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { envs } from "../../config";
-import { bcryptAdapter } from "../../config/bcrypt.adapter";
+import { bcryptAdapter } from "../../config/adapters/bcrypt.adapter";
 import { CategoryModel } from "../mongo/models/category.model";
 import { ProductModel } from "../mongo/models/product.model";
 import { UserModel } from "../mongo/models/user.model";
