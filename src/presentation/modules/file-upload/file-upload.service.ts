@@ -5,7 +5,6 @@ import { UuidAdapter } from "../../../config";
 
 const validExtensionsTypes = ['png', 'jpg', 'jpeg', 'gif'] as const;
 
-// Define el tipo basado en las claves del objeto
 type ValidExtensions = typeof validExtensionsTypes[number];
 
 interface IFileUploadParameters<T> {
@@ -15,10 +14,7 @@ interface IFileUploadParameters<T> {
 }
 
 export class FileUploadService {
-
-    constructor(
-        private readonly uuid = UuidAdapter.v4
-    ) { }
+    constructor(private readonly uuid = UuidAdapter.v4) { }
 
     private checkFolder(path: string) {
         if (!existsSync(path)) {
@@ -26,15 +22,25 @@ export class FileUploadService {
         }
     }
 
-    uploadFileMultiple = ({ file, folder = 'uploads', validExtensions }: IFileUploadParameters<any[]>) => {
-    }
+    uploadFileMultiple = ({
+        file,
+        folder = 'uploads',
+        validExtensions = validExtensionsTypes.slice() as ValidExtensions[],
+    }: IFileUploadParameters<any[]>) => { };
 
-    async uploadFileSingle({ file, folder = 'uploads', validExtensions = ['png', 'jpg', 'jpeg', 'gif'] }: IFileUploadParameters<UploadedFile>) {
-
+    async uploadFileSingle({
+        file,
+        folder = 'uploads',
+        validExtensions = validExtensionsTypes.slice() as ValidExtensions[],
+    }: IFileUploadParameters<UploadedFile>) {
         try {
-            const fileExtension = file.mimetype.split('/').at(1);
-            if (validExtensions && !validExtensions.includes(fileExtension as ValidExtensions)) {
-                throw { message: `Invalid file extension ${fileExtension}, valid ones ${validExtensions}`, code: 400 };
+            const fileExtension = file.mimetype.split('/').at(1) as ValidExtensions;
+
+            if (validExtensions && !validExtensions.includes(fileExtension)) {
+                throw {
+                    message: `Invalid file extension ${fileExtension}, valid ones ${validExtensions}`,
+                    code: 400,
+                };
             }
 
             const destination = path.resolve(__dirname, '../../../../', folder);
@@ -46,12 +52,12 @@ export class FileUploadService {
                 if (err) throw { message: err, code: 500 };
             });
 
-            return Promise.resolve({ message: 'File uploaded', data: { fileName } });
-
+            return Promise.resolve({
+                message: 'File uploaded',
+                data: { fileName },
+            });
         } catch (error) {
             throw error;
         }
-
     }
-
 }
