@@ -11,18 +11,20 @@ export class FileUploadController {
     ) { }
 
     uploadFileMultiple = (req: Request, res: Response) => {
-        res.json({ message: 'File uploaded multiple' });
+        const file = req.body.files as UploadedFile[];
+
+        this.fileUploadService.uploadFileMultiple({ file, folder: `uploads/${req.params.type}` })
+            .then((uploaded) => res.json(uploaded))
+            .catch((err: any) => res.status(err.code).json({ message: err.message }));
     }
 
 
     uploadFile = (req: Request, res: Response) => {
-
         const file = req.body.files.at(0) as UploadedFile;
 
         this.fileUploadService.uploadFileSingle({ file, folder: `uploads/${req.params.type}` })
             .then((uploaded) => res.json(uploaded))
             .catch((err: any) => res.status(err.code).json({ message: err.message }));
-
     }
 
 }

@@ -2,6 +2,7 @@ import { UploadedFile } from "express-fileupload";
 import { existsSync, mkdirSync } from "fs";
 import path from "path";
 import { UuidAdapter } from "../../../config";
+import _ from "lodash";
 
 const validExtensionsTypes = ['png', 'jpg', 'jpeg', 'gif'] as const;
 
@@ -22,17 +23,12 @@ export class FileUploadService {
         }
     }
 
-    uploadFileMultiple = ({
-        file,
-        folder = 'uploads',
-        validExtensions = validExtensionsTypes.slice() as ValidExtensions[],
-    }: IFileUploadParameters<any[]>) => { };
-
     async uploadFileSingle({
         file,
         folder = 'uploads',
         validExtensions = validExtensionsTypes.slice() as ValidExtensions[],
     }: IFileUploadParameters<UploadedFile>) {
+
         try {
             const fileExtension = file.mimetype.split('/').at(1) as ValidExtensions;
 
@@ -60,4 +56,22 @@ export class FileUploadService {
             throw error;
         }
     }
+
+    async uploadFileMultiple({
+        file,
+        folder = 'uploads',
+        validExtensions = validExtensionsTypes.slice() as ValidExtensions[],
+    }: IFileUploadParameters<UploadedFile[]>) {
+
+        try {
+            const fileNames = await Promise.all(
+                file.map(file => this.uploadFileSingle({ file, folder, validExtensions }))
+            )
+            const response = fileNames.map(({ data }) => data.fileName);
+
+            return { message: 'Files uploaded', data: { fileNames: response } };
+        } catch (error) {
+            throw error;
+        }
+    };
 }

@@ -20,20 +20,4 @@ export class FileUploadMiddleware {
 
     }
 
-    static async checkTypes(req: Request, res: Response, next: NextFunction) {
-        const type = req.params.type;
-
-        const validTypes = ['users', 'products', 'categories'];
-
-        if (!validTypes.includes(type)) {
-            return CustomError.badRequest(`Invalid type ${type}, valid ones ${validTypes}`, res);
-        }
-    }
-
-    static async containFilesMultiple(req: Request, res: Response, next: NextFunction) {
-
-    }
-
-
-
 }
